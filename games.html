@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Games</title>
+  <link rel="stylesheet" href="games.css" />
+</head>
+<body>
+  <div class="page-frame">
+    <div class="header">★ˏˋ°•*⁀➷ ︶︶︶ ⊹ ︶︶︶︶︶ ⊹ ︶︶ ୨♡୧ ︶︶︶ ⊹ ︶︶︶︶︶ ⊹ ︶︶ ୨♡୧ ︶︶︶ ⊹ ︶︶ˏˋ°•*⁀➷</div>
+    <a href="index.html" class="home-button">♡ Home</a>
+
+    <h1 class="title">My Games *°☆*</h1>
+
+    <div class="carousel-container">
+      <div class="arrow left" onclick="prevGame()">◀</div>
+      <div class="game-thumbnails" id="game-thumbnails">
+        <!--JS thumbnails go here-->
+      </div>
+      <div class="arrow right" onclick="nextGame()">▶</div>
+    </div>
+
+    <div class="game-info" id="game-info">Click a game to read about it!</div>
+    <div class="footer">☆. • ☆ . ° .• °:. *₊° .☆*･ﾟ☆ ┗━✦❘༻Thanks for playing! More games soon! ༺❘✦━━┛☆°☆.　 . • ☆ . ° .• °:.☆</div>
+  </div>
+
+  <script>
+    const games = [
+      {
+        title: "ALL PILLARS",
+        thumb: "All_Pillars_Thumbnail.jpg",
+        link: "https://youritchpage1.itch.io",
+        info: "A 2D rhythm platformer game!"
+      },
+      {
+        title: "No Title",
+        thumb: "game2.jpg",
+        link: "https://youritchpage2.itch.io",
+        info: "Nothing here ):"
+      },
+      {
+        title: "No Title",
+        thumb: "game3.jpg",
+        link: "https://youritchpage3.itch.io",
+        info: "Nothing here ):"
+      },
+      {
+        title: "No Title",
+        thumb: "game3.jpg",
+        link: "https://youritchpage3.itch.io",
+        info: "Nothing here ):"
+      }
+    ];
+
+    let current = 0;
+
+    function renderThumbnails() {
+      const container = document.getElementById("game-thumbnails");
+      container.innerHTML = "";
+
+      const total = games.length;
+
+      //Get the previous, current, and next indexes (wrap around)
+      const indexes = [
+        (current - 1 + total) % total,
+        current,
+        (current + 1) % total
+      ];
+
+      indexes.forEach((i) => {
+        const div = document.createElement("div");
+        div.className = i === current ? "thumbnail center" : "thumbnail";
+
+        const img = document.createElement("img");
+        img.src = games[i].thumb;
+        img.alt = games[i].title;
+        img.onclick = () => {
+          if (i === current) {
+            window.open(games[i].link, "_blank");
+          } else {
+            current = i;
+            renderThumbnails();
+            updateInfo();
+          }
+        };
+
+        div.appendChild(img);
+        container.appendChild(div);
+      });
+    }
+
+    function updateInfo() {
+      document.getElementById("game-info").innerText = games[current].info;
+    }
+
+    function prevGame() {
+      current = (current - 1 + games.length) % games.length;
+      renderThumbnails();
+      updateInfo();
+    }
+
+    function nextGame() {
+      current = (current + 1) % games.length;
+      renderThumbnails();
+      updateInfo();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderThumbnails();
+      updateInfo();
+    });
+  </script>
+</body>
+</html>
+

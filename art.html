@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art Gallery</title>
+  <link rel="stylesheet" href="art.css" />
+</head>
+<body>
+  <div class="page-frame">
+    <a href="index.html" class="home-button">♡ Home</a>
+
+    <div class="side-gallery">
+      <div class="thumbnail-container" id="thumbnail-container">
+        <!--JS thumbnails go here-->
+      </div>
+    </div>
+
+    <div class="main-display">
+      <div class="art-title" id="art-title">Art Title</div>
+      <div class="art-frame-wrapper">
+        <img src="Untitled_Artwork2.png" alt="Previous" class="nav-arrow" onclick="prevArt()" />
+
+        <div class="art-frame">
+          <img src="IMG_4573.jpg" id="main-art" />
+        </div>
+
+        <img src="Untitled_Artwork.png" alt="Next" class="nav-arrow" onclick="nextArt()" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const artImages = [
+      { title: "oc practice", src: "IMG_4573.jpg" },
+      { title: "anime style girl", src: "IMG_4574.jpg" },
+      { title: "cartoon oc", src: "IMG_4575.png" },
+      { title: "cartoon oc 2", src: "IMG_4576.png" },
+      { title: "ramona flowers", src: "IMG_4577.jpg" },
+      { title: "sick jake working", src: "IMG_4578.jpg" }
+    ];
+
+    let current = 0;
+
+    function setArt(index) {
+      current = index;
+      document.getElementById("main-art").src = artImages[index].src;
+      document.getElementById("art-title").innerText = artImages[index].title;
+      updateThumbnails();
+    }
+
+    function updateThumbnails() {
+      const container = document.getElementById("thumbnail-container");
+      container.innerHTML = "";
+
+      artImages.forEach((art, i) => {
+        if (i !== current) {
+          const thumb = document.createElement("img");
+          thumb.src = art.src;
+          thumb.className = "thumbnail";
+          thumb.onclick = () => setArt(i);
+          container.appendChild(thumb);
+        }
+      });
+
+      const scrollToIndex = Math.max(current - 1, 0);
+      const thumbHeight = 120;
+      container.scrollTop = scrollToIndex * thumbHeight;
+    }
+
+    function nextArt() {
+      current = (current + 1) % artImages.length;
+      setArt(current);
+    }
+
+    function prevArt() {
+      current = (current - 1 + artImages.length) % artImages.length;
+      setArt(current);
+    }
+
+    setArt(0);
+  </script>
+</body>
+</html>
+
+
+

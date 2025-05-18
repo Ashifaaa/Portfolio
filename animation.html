@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animation Gallery</title>
+  <link rel="stylesheet" href="animation.css" />
+</head>
+<body>
+  <div class="page-frame">
+    <div class="top-section">
+      <a href="index.html" class="home-button">⟵ Home</a>
+    </div>
+
+    <div class="main-layout">
+      <div class="video-display">
+        <video id="main-video" controls width="500">
+        </video>
+      </div>
+
+      <div class="info-box">
+        <h2>Under Construction!🚧</h2>
+        <p>I like making edits. So I have started making animations so I can make more edits. More coming soon!</p>
+      </div>
+    </div>
+
+    <div class="thumbnail-row" id="thumbnail-row">
+        <!--JS thumbnails go here-->
+    </div>
+  </div>
+
+  <script>
+    const videos = [
+      {
+        src: "practice_animation.mp4",
+        thumb: "thumbnail_animation.jpg"
+      },
+      {
+        src: "MainYukixMafuyu.mp4",
+        thumb: "mafuxyukixthumbnail.jpg"
+      }
+    ];
+
+    let current = 0;
+
+    function swapVideo(index) {
+      if (index === current) return;
+
+      const video = document.getElementById("main-video");
+      video.pause();
+      video.setAttribute("src", videos[index].src);
+      video.setAttribute("poster", videos[index].thumb);
+      video.load();
+      current = index;
+      updateThumbnails();
+    }
+
+    function updateThumbnails() {
+      const container = document.getElementById("thumbnail-row");
+      container.innerHTML = "";
+
+      videos.forEach((videoData, i) => {
+        if (i !== current) {
+          const thumb = document.createElement("img");
+          thumb.src = videoData.thumb;
+          thumb.className = "thumbnail";
+          thumb.onclick = () => swapVideo(i);
+          container.appendChild(thumb);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const video = document.getElementById("main-video");
+      video.setAttribute("src", videos[current].src);
+      video.setAttribute("poster", videos[current].thumb);
+      updateThumbnails();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
